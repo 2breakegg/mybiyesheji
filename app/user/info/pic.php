@@ -3,6 +3,7 @@
 <?php 
     require_once APPROOT."/user/upload/pic.php";
     require_once $ConfPath["mymodel"];
+    require_once $ConfPath["showpic"];
 
     class Info_Pic{
         var $myModel;
@@ -11,8 +12,8 @@
             $this->myModel=MyModel::getInstance();
         }
         function ShowPics(){
-            $this->myModel->getPicByUserid($_GET["userid"]);
-
+            $picDatas=$this->myModel->getPicByUserid($_GET["userid"]);
+            ShowPic::showPics($picDatas);
         }
     }
 
@@ -21,10 +22,6 @@
     $info_Pic->ShowPics();
 ?>
 
-<br/>
-<br/>
-<br/>
-<br/>
 
 <?php
  

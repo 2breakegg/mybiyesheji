@@ -19,7 +19,7 @@
             ];
             MyModel::getInstance()->modif1Row($tableName,$data,$where);
         }else{
-            echo "no ispost";
+            loge2("no ispost");
         }
     }
     modif();

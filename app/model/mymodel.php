@@ -29,9 +29,9 @@
             if($this->conn==null){
                 $this->conn = mysqli_connect($this->server_name,$this->mysql_username,$this->mysql_password,$this->db_name);
                 if($this->conn){
-                    // echo "connection success";
+                    // loge2("connection success");
                 }else{
-                    echo "connection failed";
+                    loge2("connection failed");
                     die;
                 }
             }
@@ -56,13 +56,13 @@
                     }else{
                         $mysql_qry.=" and {$i} = '{$val}'";
                     }
-                    // echo " $i , $val ";
+                    // loge2(" $i , $val ");
                 }
             }
             $result = mysqli_query($this->conn,$mysql_qry);
             $row = mysqli_fetch_assoc($result);
-            echo $mysql_qry;
-            var_dump($row);
+             $mysql_qry;
+            logvar($row);
             return $row;
         }
         //修改一条消息
@@ -73,7 +73,7 @@
             foreach($data as $i => $val){
                 if($isFirst){
                 $mysql_qry.=" {$i} = '{$val}'";
-                var_dump("  {$i} = '{$val}'");
+                logvar("  {$i} = '{$val}'");
                 $isFirst=false;
                 }else{
                 $mysql_qry.=" , {$i} = '{$val}'";
@@ -95,9 +95,9 @@
                 }
             }
 
-            echo $mysql_qry;
+            loge2($mysql_qry);
             $result = mysqli_query($this->conn,$mysql_qry);
-            var_dump($result);
+            logvar($result);
         }
 
 //=================pic表操作
@@ -108,7 +108,7 @@
             $mysql_str="INSERT INTO pic ( picname, picpath, userid, uploadtime)
                        VALUES ( '{$picname}','{$picpath}',{$userid},{$uploadtime});";
             
-            echo $mysql_str;
+            loge2($mysql_str);
             $result = mysqli_query($this->conn,$mysql_str);
 
         }
@@ -126,13 +126,7 @@
             while($row = mysqli_fetch_assoc($result)){
                 $picData[count($picData)]=$row;
             }
-            echo "<pre>";
-            echo count($picData);
-
-            print_r($picData);
-
-            echo "</pre>";
-
+            logvar($picData);
             return $picData;
         }
 

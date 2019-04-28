@@ -3,7 +3,8 @@
     date_default_timezone_set('Asia/Shanghai');
     $MyConf=[
         "md5"=>false,
-        "can_log"=>true,
+        "can_log"=>false,
+        "can_logM"=>false,
     ];
 
     $ConfPath=[

@@ -26,8 +26,8 @@
             //登录成功
             $row = mysqli_fetch_assoc($result);
             $message['text']='登录成功';
-            setcookie('userid',$row['userid'],0,'/');
-            setcookie('username',$row['username'],0,'/');
+            setcookie('userid',$row['userid'],time()+60*60*24*365,'/');
+            setcookie('username',$row['username'],time()+60*60*24*365,'/');
             header("Location: /index.php"); 
         }else{
         //账户或密码错误

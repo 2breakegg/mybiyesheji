@@ -4,7 +4,7 @@
     $MyConf=[
         "md5"=>false,
         "can_log"=>false,
-        "can_logM"=>false,
+        "can_logM"=>true,
     ];
 
     $ConfPath=[
@@ -14,6 +14,7 @@
         "top"=>APPROOT."/view/require/top.php",
         "showpic"=>APPROOT."/view/require/showpic.php",
         "user"=>APPROOT."/user/route.php",
+        "code"=>APPROOT."/code/route.php",
         "file"=>APPROOT."/file/route.php"
     ];
 ?>

@@ -31,7 +31,7 @@
             <a id="idolTab" href="javascript:getUrl('idol')"><p>关注</p></a>
             <a id="fanTab" href="javascript:getUrl('fan')"><p>粉丝</p></a>
         </div>
-        <div class="content">
+        <div id="content" class="content">
             <?php
                 if(isset($_GET['page'])){
                     require APPROOT."/user/info/{$_GET['page']}.php";

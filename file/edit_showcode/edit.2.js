@@ -44,7 +44,7 @@ var edit={
             this.ctx=edit.el.mycanvas.getContext("2d");
             edit.draw.DrawPic(this);
         },
-        DrawPic(){
+        DrawPic(){//初始 预备工作
             let ctx=edit.draw.ctx;
             let el=edit.el
             el.mycanvas.width=el.pic.width;
@@ -52,7 +52,7 @@ var edit={
             ctx.drawImage(el.pic,0,0);
             userCode.DrawPic();
             if(DrawLoop){
-                setTimeout(edit.draw.DrawPic,1000);
+                setTimeout(edit.draw.DrawPic,1000/60);
             }
         },
     }
@@ -97,6 +97,7 @@ var userCode={
     RunCode(){
         var el=edit.el;
         this.GetCode();
+        console.log(userCode.codePre+userCode.userCodeStr+userCode.codeLast);
         var fun=new Function(userCode.codePre+userCode.userCodeStr+userCode.codeLast);
         var data=fun();
         userCode.DrawPic=data[0];

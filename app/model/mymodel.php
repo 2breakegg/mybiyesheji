@@ -29,9 +29,9 @@
             if($this->conn==null){
                 $this->conn = mysqli_connect($this->server_name,$this->mysql_username,$this->mysql_password,$this->db_name);
                 if($this->conn){
-                    // loge2("connection success");
+                    // loge2M("connection success");
                 }else{
-                    loge2("connection failed");
+                    loge2M("connection failed");
                     die;
                 }
             }
@@ -61,8 +61,8 @@
             }
             $result = mysqli_query($this->conn,$mysql_qry);
             $row = mysqli_fetch_assoc($result);
-             $mysql_qry;
-            logvar($row);
+            $mysql_qry;
+            logvarM($row);
             return $row;
         }
         //修改一条消息
@@ -73,7 +73,7 @@
             foreach($data as $i => $val){
                 if($isFirst){
                 $mysql_qry.=" {$i} = '{$val}'";
-                logvar("  {$i} = '{$val}'");
+                logvarM("  {$i} = '{$val}'");
                 $isFirst=false;
                 }else{
                 $mysql_qry.=" , {$i} = '{$val}'";
@@ -95,9 +95,9 @@
                 }
             }
 
-            loge2($mysql_qry);
+            loge2M($mysql_qry);
             $result = mysqli_query($this->conn,$mysql_qry);
-            logvar($result);
+            logvarM($result);
         }
 
 //=================pic表操作
@@ -108,16 +108,28 @@
             $mysql_str="INSERT INTO pic ( picname, picpath, userid, uploadtime)
                        VALUES ( '{$picname}','{$picpath}',{$userid},{$uploadtime});";
             
-            loge2($mysql_str);
+            loge2M($mysql_str);
             $result = mysqli_query($this->conn,$mysql_str);
 
         }
 
+        function getPicByPicid($picid){
+            $this->connectMyDB();
 
+            $mysql_str="SELECT * FROM pic WHERE picid = '{$picid}'";
+
+            $result = mysqli_query($this->conn,$mysql_str);
+            $Data=Array();
+
+            while($row = mysqli_fetch_assoc($result)){
+                $Data[count($Data)]=$row;
+            }
+            // logvarM($Data);
+            return $Data;
+        }
         function getPicByUserid($userid){
             $this->connectMyDB();
 
-            $tableName="pic";
             $mysql_str="SELECT * FROM pic WHERE userid = '{$userid}'";
 
             $result = mysqli_query($this->conn,$mysql_str);
@@ -126,11 +138,55 @@
             while($row = mysqli_fetch_assoc($result)){
                 $picData[count($picData)]=$row;
             }
-            logvar($picData);
+            // logvarM($picData);
             return $picData;
         }
 
+//================code表操作
+        function getCodeByUserid($userid){
+            $this->connectMyDB();
 
+            $mysql_str="SELECT * FROM code WHERE userid = '{$userid}'";
+
+            $result = mysqli_query($this->conn,$mysql_str);
+            $Data=Array();
+
+            while($row = mysqli_fetch_assoc($result)){
+                $Data[count($Data)]=$row;
+            }
+            // logvarM($Data,"");
+            return $Data;
+        }
+
+
+        function addCode($codename,$codecontent,$userid,$uploadtime,$picid){
+            $this->connectMyDB();
+
+            $tableName="pic";
+            $mysql_str="INSERT INTO pic ( codename, codecontent, userid, uploadtime, picid)
+                       VALUES ( '{$codename}','{$codecontent}',{$userid},{$uploadtime},{$picid});";
+            
+            // loge2M($mysql_str);
+            $result = mysqli_query($this->conn,$mysql_str);
+
+        }
+
+        function getCodeById($codeid){
+            $this->connectMyDB();
+
+            $mysql_str="SELECT * FROM code WHERE codeid = '{$codeid}'";
+            loge2M($mysql_str);
+            $result = mysqli_query($this->conn,$mysql_str);
+            $Data=Array();
+
+            while($row = mysqli_fetch_assoc($result)){
+                $Data[count($Data)]=$row;
+            }
+            $picpath=$this->getPicByPicid($Data[0]["picid"])[0]["picpath"];
+            $Data[0]["picpath"]=$picpath;
+            logvarM($Data,"getCodeById");
+            return $Data;
+        }
 //==========================test
         function test(){
 

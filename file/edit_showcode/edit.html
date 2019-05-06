@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="edit.css" />
+    <title>Show Code</title>
+    <style>
+        .codeBox{
+            /* display: inline; */
+            width:400px;
+        }
+
+        .code-picBox {
+            float:left;
+            width:50%;
+        }
+        .code-picBox img {
+            width: 100%; 
+            height: auto;
+            max-width: 100%; 
+            display: block;
+        }
+        .code-picBox canvas {
+            width: 100%; 
+            height: auto;
+            max-width: 100%; 
+            display: block;
+        }
+
+        .codeInfo{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- ==================显示部分 -->
+    <div class="codeBox">
+        <div class="code-picBox">
+            <img id="pic" src="pic.jpg" alt=""/>
+        </div>
+        <div class="code-picBox">
+            <img id="pic" src="pic.jpg" alt=""/>
+        </div>
+        <div style="clear:both"></div>
+        <div class="codeInfo">abc</div>
+    </div>
+
+    <script src="./edit.js"></script>
+</body>
+</html>

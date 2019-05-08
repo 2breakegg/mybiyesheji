@@ -1,11 +1,7 @@
 <?php
     class MyModel{
 //=================变量        
-        var $db_name        = "mybiyesheji";
-        var $mysql_username = "root";
-        var $mysql_password = "123456";         //服务器端"mysqlroot"
-        var $server_name    = "localhost";
-        var $conn;
+        static $conn;
 //=================单例
         private static $_instance = NULL;
         //单例 禁止外部直接实例化
@@ -15,6 +11,7 @@
         public static function getInstance() {
             if (is_null(self::$_instance)) {
                 self::$_instance = new MyModel();
+                self::connectMyDB();
             }
 
             return self::$_instance;
@@ -25,10 +22,11 @@
         }
 //=================数据库基础操作
         //连接数据库
-        private function connectMyDB(){
-            if($this->conn==null){
-                $this->conn = mysqli_connect($this->server_name,$this->mysql_username,$this->mysql_password,$this->db_name);
-                if($this->conn){
+        private static function connectMyDB(){
+            $mysql=$GLOBALS["MyConf"]["mysql"];
+            if(self::$conn==null){
+                self::$conn = mysqli_connect($mysql["server_name"],$mysql["mysql_username"],$mysql["mysql_password"],$mysql["db_name"]);
+                if(self::$conn){
                     // loge2M("connection success");
                 }else{
                     loge2M("connection failed");
@@ -38,13 +36,13 @@
         }
         //获取消息条数
         function getNumRows($mysql_qry){
-            $this->connectMyDB();
-            $result = mysqli_query($this->conn,$mysql_qry);
+            
+            $result = mysqli_query(self::$conn,$mysql_qry);
             return mysqli_num_rows($result);
         }
         //获取一条消息
         function get1Result($tableName,$where){ //$conditions结构 ["id"=>110,"name"=>"Tom"]
-            $this->connectMyDB();
+            
             $mysql_qry="select * from $tableName";
             if(isset($where)){
                 $mysql_qry.=" where";
@@ -59,7 +57,7 @@
                     // loge2(" $i , $val ");
                 }
             }
-            $result = mysqli_query($this->conn,$mysql_qry);
+            $result = mysqli_query(self::$conn,$mysql_qry);
             $row = mysqli_fetch_assoc($result);
             $mysql_qry;
             logvarM($row);
@@ -67,7 +65,7 @@
         }
         //修改一条消息
         function modif1Row($tableName,$data,$where){
-            $this->connectMyDB();
+            
             $mysql_qry="UPDATE $tableName SET ";
             $isFirst=true;
             foreach($data as $i => $val){
@@ -96,31 +94,36 @@
             }
 
             loge2M($mysql_qry);
-            $result = mysqli_query($this->conn,$mysql_qry);
+            $result = mysqli_query(self::$conn,$mysql_qry);
             logvarM($result);
         }
 
 //=================pic表操作
         function addPic($picname,$picpath,$userid,$uploadtime){
-            $this->connectMyDB();
-
             $tableName="pic";
             $mysql_str="INSERT INTO pic ( picname, picpath, userid, uploadtime)
                        VALUES ( '{$picname}','{$picpath}',{$userid},{$uploadtime});";
             
             loge2M($mysql_str);
-            $result = mysqli_query($this->conn,$mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
 
         }
 
+        function getPicPathByPicid($picid){
+            $Data=$this->getPicByPicid($picid);
+            $result=$Data[0]["picpath"];
+            return $result;
+        }
         function getPicByPicid($picid){
-            $this->connectMyDB();
-
             $mysql_str="SELECT * FROM pic WHERE picid = '{$picid}'";
 
-            $result = mysqli_query($this->conn,$mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
             $Data=Array();
 
+            if(!mysqli_num_rows($result)){
+                $mysql_str="SELECT * FROM pic WHERE picid = '0'";
+                $result = mysqli_query(self::$conn,$mysql_str);
+            }
             while($row = mysqli_fetch_assoc($result)){
                 $Data[count($Data)]=$row;
             }
@@ -128,11 +131,9 @@
             return $Data;
         }
         function getPicByUserid($userid){
-            $this->connectMyDB();
-
             $mysql_str="SELECT * FROM pic WHERE userid = '{$userid}'";
 
-            $result = mysqli_query($this->conn,$mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
             $picData=Array();
 
             while($row = mysqli_fetch_assoc($result)){
@@ -144,11 +145,9 @@
 
 //================code表操作
         function getCodeByUserid($userid){
-            $this->connectMyDB();
-
             $mysql_str="SELECT * FROM code WHERE userid = '{$userid}'";
 
-            $result = mysqli_query($this->conn,$mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
             $Data=Array();
 
             while($row = mysqli_fetch_assoc($result)){
@@ -158,25 +157,35 @@
             return $Data;
         }
 
+        function modifyCode($codeid,$codename,$codecontent,$userid,$picid){//自行判断修改者是不是原作者,不是则不修改
+            $codecontent=mysqli_real_escape_string(self::$conn,$codecontent);
+            $uploadtime=time();
+            $mysql_str="UPDATE code SET codename='{$codename}' , codecontent='{$codecontent}' , uploadtime='{$uploadtime}' , picid={$picid} WHERE codeid={$codeid}";
+            $isSameUser = MyModel::getInstance()->get1Result("code",["codeid"=>$codeid,"userid"=>$userid]);
+            // logvarM()
+            if($isSameUser){
+                loge2M("用户id一致,执行修改");
+                loge2M($mysql_str);
+                return mysqli_query(self::$conn,$mysql_str);
+            }else{
+                loge2M("用户id不一致,不修改");
+                return false;
+            }
+        }
 
-        function addCode($codename,$codecontent,$userid,$uploadtime,$picid){
-            $this->connectMyDB();
-
-            $tableName="pic";
-            $mysql_str="INSERT INTO pic ( codename, codecontent, userid, uploadtime, picid)
+        function addCode($codename,$codecontent,$userid,$picid){
+            $uploadtime=time();
+            $mysql_str="INSERT INTO code ( codename, codecontent, userid, uploadtime, picid)
                        VALUES ( '{$codename}','{$codecontent}',{$userid},{$uploadtime},{$picid});";
             
             // loge2M($mysql_str);
-            $result = mysqli_query($this->conn,$mysql_str);
-
+            return mysqli_query(self::$conn,$mysql_str);
         }
 
         function getCodeById($codeid){
-            $this->connectMyDB();
-
             $mysql_str="SELECT * FROM code WHERE codeid = '{$codeid}'";
             loge2M($mysql_str);
-            $result = mysqli_query($this->conn,$mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
             $Data=Array();
 
             while($row = mysqli_fetch_assoc($result)){

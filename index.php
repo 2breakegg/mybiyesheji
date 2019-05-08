@@ -9,11 +9,11 @@
     function WWWGetRequirePath($ConfPath){
         $logAble=true;
         if($logAble){
-            echo "<h1>//====index.php log=====</h1>";
-            echo "PHP_SELF:　　".$_SERVER['PHP_SELF']."<br/>";
-            echo "__FILE__:　　".__FILE__."<br/>";
-            echo "WWWROOT: 　　".WWWROOT."<br/>";
-            echo "APPROOT: 　　".APPROOT."<br/>";
+            // echo "<h1>//====index.php log=====</h1>";
+            // echo "PHP_SELF:　　".$_SERVER['PHP_SELF']."<br/>";
+            // echo "__FILE__:　　".__FILE__."<br/>";
+            // echo "WWWROOT: 　　".WWWROOT."<br/>";
+            // echo "APPROOT: 　　".APPROOT."<br/>";
         }
         // require APPROOT."index.php";
         $path_str=str_replace("//" , "/",$_SERVER['PHP_SELF']);
@@ -23,13 +23,13 @@
         $paths["now"]=0;
         @$requirePath = $ConfPath[$paths[$paths["now"]]] ? $ConfPath[$paths[$paths["now"]]] : $ConfPath["404"];
         if($logAble){
-            echo "<br/>path_str:　　".$path_str."<br/>";
-            echo "path1: 　　";
-            echo "<pre>";
-            var_dump($paths);
-            echo "</pre>";
-            echo "requirePath:　　"."<br/>".$requirePath."<br/>";
-            echo "<h2>//====index.php log END=====</h2>";
+            // echo "<br/>path_str:　　".$path_str."<br/>";
+            // echo "path1: 　　";
+            // echo "<pre>";
+            // var_dump($paths);
+            // echo "</pre>";
+            // echo "requirePath:　　"."<br/>".$requirePath."<br/>";
+            // echo "<h2>//====index.php log END=====</h2>";
         }
         $GLOBALS["Paths"]=$paths;
         return $requirePath;

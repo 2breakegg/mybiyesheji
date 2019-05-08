@@ -6,6 +6,7 @@
         $thisRoot=APPROOT."/code";
         $codeRoute=array(
             "uploadcode"=>$thisRoot."/uploadcode.php",
+            "uploadcode.php"=>$thisRoot."/uploadcode.php",
         );
 
         @$requirePath = $codeRoute[$Paths[$Paths["now"]]] 

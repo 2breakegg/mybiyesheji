@@ -5,6 +5,12 @@
         "md5"=>false,
         "can_log"=>false,
         "can_logM"=>true,
+        "mysql"=>[
+            "db_name"        => "mybiyesheji",
+            "mysql_username" => "root",
+            "mysql_password" => "123456",         //服务器端"mysqlroot"
+            "server_name"    => "localhost",
+        ]
     ];
 
     $ConfPath=[

@@ -36,9 +36,9 @@
     }
 //===========本体
     function loge2__($obj2,$name){
-        echo "<br>";
+        echo "<pre>";
         echo $name." : ".$obj2;
-        echo "<br>";
+        echo "</pre>";
     }
     function logvar__($obj2,$name){
         echo "<pre>";

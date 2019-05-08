@@ -10,6 +10,7 @@
 </head>
 <body>
 <?php
+    require $ConfPath["top"];
     if(!isset($_GET['userid'])){
         if(!isset($_COOKIE['userid'])){
             header("Location: ".$_SERVER['HTTP_HOST']."/user/login");

@@ -1,6 +1,6 @@
+
 var log=console.log;
 var DrawLoop=false;
-
 var edit={
     el:{
         myName:["edit","el"],
@@ -17,22 +17,47 @@ var edit={
             return myParent
         },
         Init(){
+
             let t=this;
             t.codeText=document.getElementById("codeText");  
             t.argumentsBox=document.getElementById("argumentsBox");
             t.mycanvas=document.getElementById("mycanvas");  
             t.pic=document.getElementById("pic");
             t.loop=document.getElementById("loop");
+            t.codeid=document.getElementById("codeid");
+            t.codename=document.getElementById("codename");
+            t.picid=document.getElementById("picid");
 
-
+            t.pic.src=mysqlData["picpath"];
+            t.codeid.value=mysqlData["codeid"];
+            t.codename.value=mysqlData["codename"];
+            t.picid.value=mysqlData["picid"];
             t.pic.onload=function(){
-                console.log("t.pic.onload");
+                // console.log("t.pic.onload");
                 edit.draw.Init();
             }
 
+            t.picid.addEventListener("keydown",(e)=>{
+                if(e.key=="Enter"){
+                    var xmlhttp = new XMLHttpRequest();
+                    xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            // document.getElementById("txtHint").innerHTML = this.responseText;
+                            log(this.responseText);
+                            log(t.pic);
+                            t.pic.src=this.responseText
+                        }
+                    };
+                    xmlhttp.open("POST", "/tools/getpicpathbypicid.php", true);
+                    xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xmlhttp.send("picid="+t.picid.value);
+                }
+            });
             t.codeText.addEventListener("keydown",(e)=>{
                 if(e.key=="Enter" && e.ctrlKey==true){
+                    
                     userCode.RunCode();
+
                 }
             });
         }
@@ -111,8 +136,8 @@ var userCode={
             let el2_input=document.createElement('input');
         
             el2_input.type="text";
-            el2_input.addEventListener("keydown",e=>{
-                log("keyDown");
+            el2_input.onkeydown=function(e){
+
                 if(e.key=="Enter"){
                     log("Enter");
                     if(myArguments[key].type=="num"){
@@ -121,8 +146,23 @@ var userCode={
                         myArguments[key].val=el2_input.value;
                     }
                     edit.draw.DrawPic();
+                    return false;
                 }
-            })
+            }
+            // el2_input.addEventListener("keydown",e=>{
+            //     if(e.key=="Enter"){
+            //         log("Enter");
+            //         if(myArguments[key].type=="num"){
+            //             myArguments[key].val= Number.parseFloat(el2_input.value);
+            //         }else{
+            //             myArguments[key].val=el2_input.value;
+            //         }
+            //         edit.draw.DrawPic();
+            //         console.log("keydown, return false");
+            //         return false;
+            //     }
+            //     return false;
+            // })
             el2_label.innerText=key;
             el2_input.value=myArguments[key].val;
             el2_arguments.appendChild(el2_label);

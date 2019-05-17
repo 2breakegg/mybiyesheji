@@ -1,7 +1,7 @@
 // pic 图片展示页<br/>
-
+<a href="/pic/">添加新图片</a>
+<br/>
 <?php 
-    require_once APPROOT."/user/upload/pic.php";
     require_once $ConfPath["mymodel"];
     require_once $ConfPath["showpic"];
 

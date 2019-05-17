@@ -28,7 +28,7 @@
                 $userid=$_COOKIE["userid"];
                 $uploadtime=time();
 
-                $this->myModel->addPic($picname,$picpath,$userid,$uploadtime);
+                $this->myModel->addPic($picname,$picpath,$userid);
             }
         }
         //上传保存图片文件

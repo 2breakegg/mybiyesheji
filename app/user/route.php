@@ -9,6 +9,8 @@
             "login.php"=>$thisRoot."/login.php",
             ""=>$thisRoot."/userindex.php",
             "info"=>$thisRoot."/userindex.php",
+            "info.php"=>$thisRoot."/userindex.php",
+            "updatefans"=>$thisRoot."/updatefans.php",
         );
         ++$Paths["now"];
         @$requirePath = $userRoute[$Paths[$Paths["now"]]] 

@@ -1,6 +1,8 @@
 // uploadcode.php
 
 <?php
+
+require_once $ConfPath["top"];
 require_once $ConfPath["mymodel"];
 class UploadCode{
     function Init(){
@@ -11,6 +13,8 @@ class UploadCode{
             $this->addNewCode();
         }else if( $type == "修改"){
             $this->modifyCode();
+        }else if( $type == "删除"){
+            $this->deleteCode();
         }
     }
     function addNewCode(){
@@ -27,7 +31,6 @@ class UploadCode{
         // MyModel::getInstance()->get1Result("code",[""])
     }
     function modifyCode(){
-        echo "modifyCode";
         $codeid=$_POST["codeid"];
         $codename=$_POST["codename"];
         $codecontent=$_POST["codecontent"];
@@ -39,8 +42,17 @@ class UploadCode{
             echo "修改失败";
         }
     }
+    function deleteCode(){
+        $codeid=$_POST["codeid"];
+        $userid=$_COOKIE["userid"];
+        if(MyModel::getInstance()->deleteCode($codeid,$userid)){
+            echo "删除成功";
+        }else{
+            echo "删除失败";
+        }
+    }
 }
-header('Content-type: text/plain');
+// header('Content-type: text/plain');
 
 (new UploadCode())->Init();
 ?>

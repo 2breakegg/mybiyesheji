@@ -1,5 +1,6 @@
-//todo code page
+//code page
 //特效页
+<a href="/code">添加新特效</a>
 <style>
         .codeBox{
             /* display: inline; */

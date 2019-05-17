@@ -1,6 +1,26 @@
 
 var log=console.log;
 var DrawLoop=false;
+
+mysqlData=mysqlData ? mysqlData : {"codeid":"0","codename":"默认","picid":"0","picpath":"/file/pic/0.png","codecontent":`var userField = {
+    size:{type:"num",val:5},
+    color:{type:"text",val:"#fff"}
+};
+var DrawPic=function(){
+    let a=userField.size.val;
+    let w=mycanvas.width;
+    let h=mycanvas.height;
+    ctx.fillStyle=userField.color.val;
+
+    //h*=Math.abs(Math.sin(new Date().getTime()/1000));
+    h*=1;
+    for(let i=0; i<w;i+=a){
+        for(let j=0; j<h;j+=a){
+            ctx.fillRect(i,j,a/2,a/2);
+        }
+    }
+}`,};
+
 var edit={
     el:{
         myName:["edit","el"],

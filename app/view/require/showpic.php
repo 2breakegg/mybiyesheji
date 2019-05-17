@@ -19,12 +19,14 @@
         }
 
         public static function showPic($data){
+            echo "<a href='/pic/{$data['picid']}'>";
             echo '<div class="picBoxBig">';
             echo "<div class='picBox'>";
             echo    "<img class='imgInBox' src='{$data['picpath']}'/>";
             echo "</div>";
             echo "<p class='picName' style=''>{$data['picname']}</p>";
             echo '</div>';
+            echo '</a>';
         }
 
         public static function showPics($datas){

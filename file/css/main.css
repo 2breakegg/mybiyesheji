@@ -3,6 +3,22 @@ body{
     padding:0;
 }
 
+
+.hidden{
+    display:none;
+}
+.show{
+    display:block;
+}
+.showInline{
+    display:inline;
+}
+
+
+.mainBox{
+    width:960px;
+    margin:0 auto;
+}
 .picBoxBig{
     margin: 10px;
     float:left;

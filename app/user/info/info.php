@@ -26,6 +26,7 @@
     //=======================查找数据
     $conditions=["userid"=>$userid];
     $row=MyModel::getInstance()->get1Result($tableName,$conditions);
+    $isfans = MyModel::getInstance()->isFans($row["userid"],$_COOKIE["userid"]);
 ?>
 <style>
     .infoTable{
@@ -58,7 +59,14 @@
             <tr><td colspan="2" style="text-align:center"><input type="submit"/> <button type="button" onclick='showInfoTable()'>取消</button></td></tr>
         </form>
     </table>
-
+    <form action="/user/updatefans" method="post">
+        <p>
+            粉丝数:<?php echo $row["fansnum"];?> 
+            <input type="hidden" name="upid" value="<?php echo $row["userid"]?>"/>
+            <input class="<?php echo !$isfans ? 'showInline' : 'hidden'?>"  type="submit" name="type" value="关注"> 
+            <input class="<?php echo $isfans ? 'showInline' : 'hidden'?>"  type="submit" name="type" value="取消关注"> 
+        </p>
+    </form>
     <script>
         function showModiTable(){
             var el_modiTable=document.getElementById("modiTable");

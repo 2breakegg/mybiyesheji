@@ -1,5 +1,5 @@
 <style>
-    body div{
+    body,div{
         margin:0;
         padding:0;
     }
@@ -16,9 +16,11 @@
     }
     .top_2left{
         float:left;
+        line-height:30px;
     }
     .top_2right{
         float:right;
+        line-height:30px;
     }
 </style>
 

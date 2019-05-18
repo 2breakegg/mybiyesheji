@@ -76,12 +76,16 @@
         }
         echo $message['text'];
     }
+    function signOut(){
+        setcookie('userid',$row['userid'],time()-1,'/');
+        header("Location: /index.php");
+    }
     //主入口
     function init(){
-        if(isset($_COOKIE['username'])){
-            echo "run header";
-            header("Location: /index.php"); 
-        }
+        // if(isset($_COOKIE['username'])){
+        //     echo "run header";
+        //     header("Location: /index.php"); 
+        // }
         @$GLOBALS['type']=$_POST["type"];
         echo $type=$GLOBALS['type'];
         if($type==""){
@@ -90,7 +94,9 @@
             signIn();
         }elseif($type=="signUp"){
             signUp();
-        }else{}
+        }elseif($type=="signOut"){
+            signOut();
+        }
     }
 ?>
 
@@ -100,7 +106,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <link rel="stylesheet" href="/file/css/main.css" type="text/css">
+    <title>登录</title>
     <style>
         .tabBox{
             margin: auto;

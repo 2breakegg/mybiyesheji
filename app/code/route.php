@@ -7,6 +7,8 @@
         $codeRoute=array(
             "uploadcode"=>$thisRoot."/uploadcode.php",
             "uploadcode.php"=>$thisRoot."/uploadcode.php",
+            "collectcode"=>$thisRoot."/collectcode.php",
+            "collectcode.php"=>$thisRoot."/collectcode.php",
         );
 
         @$requirePath = $codeRoute[$Paths[$Paths["now"]]] 

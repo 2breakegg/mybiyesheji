@@ -1,6 +1,7 @@
 body{
     margin:0;
     padding:0;
+    background:#eee;
 }
 
 
@@ -17,7 +18,8 @@ body{
 
 .mainBox{
     width:960px;
-    margin:0 auto;
+    margin:30px auto;
+    position:relative;
 }
 .picBoxBig{
     margin: 10px;

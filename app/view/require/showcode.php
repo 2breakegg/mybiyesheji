@@ -1,10 +1,9 @@
-//code page
-//特效页
-<a href="/code">添加新特效</a>
 <style>
     .codeBox{
         /* display: inline; */
         width:400px;
+        float:left;
+        margin:10px;
     }
 
     .code-picBox {
@@ -28,38 +27,23 @@
         text-align: center;
     }
 </style>
-<div class="codeBigBox">
-</div>
 <?php
     require_once $ConfPath["mymodel"];
 
-    class Info_Code{
-        var $myModel;
-        var $codeDatas;
-        function Init(){
-            $this->myModel=MyModel::getInstance();
-        }
-        function ShowCodes(){
-            $codeDatas=$this->myModel->getCodeByUserid($_GET["userid"]);
+    class ShowCode{
+        static function showCodes($codeDatas){
             echo "<script> var mysqlData=[";
             for($i=0;$i<count($codeDatas);$i++){
                 echo '{"codename":"'.$codeDatas[$i]["codename"].'",';
                 echo '"codeid":"'.$codeDatas[$i]["codeid"].'",';
-                $picData=$this->myModel->getPicByPicid($codeDatas[$i]["picid"]);
+                $picData=MyModel::getInstance()->getPicByPicid($codeDatas[$i]["picid"]);
                 echo '"picpath":\''.$picData[0]["picpath"].'\',';
                 // echo '"picpath":"'.$codeDatas[$i]["picpath"].'",';
                 echo '"codecontent":`'.$codeDatas[$i]["codecontent"].'`},';
             }
             echo "];</script>";
             echo '<script src="/file/edit_showcode/edit.js"></script>';
-            return $codeDatas;
         }
     }
 
-    $info_Code=new Info_Code;
-    $info_Code->Init();
-    $info_Code->ShowCodes();
-    // echo "<script> ";
-    // echo "var mysqlData=".json_encode($info_Code->ShowCodes());
-    // echo "</script>";
 ?>

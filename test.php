@@ -1,20 +1,5 @@
 <?php
-    function fun1(){
-        echo "fun1";
-    }
+    $a=Array();
 
-    // $fun22=function fun2(){
-    //     echo "fun2";
-    // };
-
-    function f($fun){
-        $fun;
-    }
-
-    function init(){
-        $fun=fun2;
-        f($fun);
-    }
-
-    init();
+    echo $a ? 'T' :'F';
 ?>

@@ -1,4 +1,5 @@
 <?php
+
     Class ShowPic{
         //=================单例
         private static $_instance = NULL;

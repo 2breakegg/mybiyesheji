@@ -99,13 +99,18 @@
         }
 
 // ============================user表
+        function getNicknameByUserid($userid){
+            $mysql_str="SELECT nickname FROM user WHERE userid = '{$userid}'";
+            $result = mysqli_query(self::$conn,$mysql_str);
+            return mysqli_fetch_assoc($result)["nickname"];
+        }
         function getUserByUserid($userid){
             $mysql_str="SELECT * FROM user WHERE userid = '{$userid}'";
             $result = mysqli_query(self::$conn,$mysql_str);
             return mysqli_fetch_assoc($result);
         }
-        function getUpsByUpids($upids){
-            //todo ing
+        function getUsersByUserids($upids){
+
             logvar($upids,"upids");
             if(!$upids){
                 return Array();
@@ -122,6 +127,26 @@
             }
             return $result;
         }
+        function getUsersByNicknamePart($keyword){
+            $mysql_str="SELECT * FROM user WHERE nickname LIKE '%{$keyword}%'";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
+        function getUsersAny(){
+            // test
+            $mysql_str="SELECT * FROM user";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
+
         function fansAdd1($userid){
             $mysql_str="UPDATE user SET fansnum = fansnum+1 WHERE userid={$userid}";
             $userData=$this->getUserByUserid($userid);
@@ -191,6 +216,25 @@
             }
             return $result;
             // $mysql_str+="picid={$picids[$i]}";
+        }
+        function getPicsByPicnamePart($keyword){
+            $mysql_str="SELECT * FROM pic WHERE picname LIKE '%{$keyword}%'";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
+        function getPicsAny(){
+            // test
+            $mysql_str="SELECT * FROM pic WHERE picid!=0";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
         }
 
         function addPic($picname,$picpath,$userid){
@@ -273,6 +317,56 @@
             logvarM($Data,"getCodeById");
             return $Data;
         }
+        function getCodeByCodeid_($codeid){
+            $mysql_str="SELECT * FROM code WHERE codeid = '{$codeid}'";
+            loge2M($mysql_str);
+            $result = mysqli_query(self::$conn,$mysql_str);
+            $Data=Array();
+
+            while($row = mysqli_fetch_assoc($result)){
+                $Data[count($Data)]=$row;
+            }
+            $picpath=$this->getPicByPicid($Data[0]["picid"])[0]["picpath"];
+            $Data[0]["picpath"]=$picpath;
+            logvarM($Data,"getCodeById");
+            return $Data;
+        }
+        function getCodesByCodeids($codeids){
+            if(!$codeids){
+                return Array();
+            }
+            $mysql_str="SELECT * FROM code WHERE ";
+            for($i=0; $i<count($codeids)-1; $i++){
+                $mysql_str.=" codeid={$codeids[$i]} OR ";
+            }
+            $mysql_str.=" codeid={$codeids[$i]}";
+            $mysql_data=mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+            // $mysql_str+="codeid={$codeids[$i]}";
+        }
+        function getCodesByCodenamePart($keyword){
+            $mysql_str="SELECT * FROM code WHERE codename LIKE '%{$keyword}%'";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
+        function getCodesAny(){
+            // test
+            $mysql_str="SELECT * FROM code WHERE codeid!=0 ";
+            $mysql_data = mysqli_query(self::$conn,$mysql_str);
+            $result=array();
+            while($row = mysqli_fetch_assoc($mysql_data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
 
         function modifyCode($codeid,$codename,$codecontent,$userid,$picid){//自行判断修改者是不是原作者,不是则不修改
             $codecontent=mysqli_real_escape_string(self::$conn,$codecontent);
@@ -310,6 +404,22 @@
             }
         }
 
+        function collectCodeAdd1($codeid){//图片收藏量+1 操作失败 return false
+            $mysql_str="UPDATE code SET collectnum = collectnum+1 WHERE codeid={$codeid}";
+            $codeData=$this->getCodeByCodeid_($codeid);
+            if($codeData==false){
+                return false;
+            }
+            return mysqli_query(self::$conn,$mysql_str);
+        }
+        function collectCodeMinus1($codeid){//图片收藏量-1 操作失败 return false
+            $mysql_str="UPDATE code SET collectnum = collectnum-1 WHERE codeid={$codeid}";
+            $codeData=$this->getCodeByCodeid_($codeid);
+            if($codeData==false){
+                return false;
+            }
+            return mysqli_query(self::$conn,$mysql_str);
+        }
 //==========================picc表
         function getPiccPicidByUserid($userid){ //返回 picids{[0]=>36,[1]=>40...}
             $mysql_str="SELECT picid FROM picc WHERE userid={$userid}";
@@ -342,6 +452,37 @@
             return $data;
         }
         // function 
+//==========================Codec表
+    function getCodecCodeidByUserid($userid){ //返回 codeids{[0]=>36,[1]=>40...}
+        $mysql_str="SELECT codeid FROM codec WHERE userid={$userid}";
+        $data=mysqli_query(self::$conn,$mysql_str);
+        $codeids=Array();
+        while($row = mysqli_fetch_assoc($data)){
+            $codeids[count($codeids)]=$row["codeid"];
+        }
+        return $codeids;
+    }
+    function isInCollectCodec($userid,$codeid){
+        $result = $this->get1Result("codec",["codeid"=>$codeid,"userid"=>$userid]);
+        if($result) logvarM("已收藏");
+        return $result;
+    }
+    function addCollectCodec($userid,$codeid,$customname){
+        logvarM("addCollectcodec");
+        $collectTime=time();
+        $mysql_str="INSERT INTO codec VALUE ($userid,$codeid,'$customname',$collectTime)";
+        logvarM($mysql_str,"mysql_str");
+        return mysqli_query(self::$conn,$mysql_str);
+    }
+
+    function deleteCollectCodec($userid,$codeid){
+        logvarM("deleteCollectcodec");
+        $mysql_str="DELETE FROM codec WHERE userid = $userid and codeid = $codeid";
+        logvarM($mysql_str,"mysql_str");
+        $data=mysqli_query(self::$conn,$mysql_str);
+        logvarM($data,"data");
+        return $data;
+    }
 //==========================fans表
         function getUpidsByFansid($fansid){
             $mysql_str="SELECT upid FROM fans WHERE fansid={$fansid}";
@@ -368,6 +509,16 @@
             $mysql_str=" DELETE FROM fans WHERE upid={$upid} AND fansid={$fansid}";
             logvarM($mysql_str);
             return mysqli_query(self::$conn,$mysql_str);
+        }
+
+        function getFansidsByUpid($upid){
+            $mysql_str="SELECT fansid FROM fans WHERE upid={$upid}";
+            $data=mysqli_query(self::$conn,$mysql_str);
+            $fansids=Array();
+            while($row = mysqli_fetch_assoc($data)){
+                $fansids[count($fansids)]=$row["fansid"];
+            }
+            return $fansids;
         }
 
 //==========================杂
@@ -404,6 +555,39 @@
             $result=$this->getPicsByPicids($picids);
             return $result;
         }
+    //======================代码收藏相关
+        function collectCode($userid,$codeid,$customname){
+            //判断有没有收藏  
+            //    ? 判断有没有图片 +1成不成功
+            //        ? 收藏 codec 增加一条记录;
+            //          ? return true : return false;
+            //        : return false
+            //    : return false
+            if(!$this->isInCollectCodec($userid,$codeid)){//判断有没有收藏  
+                if($this->collectCodeAdd1($codeid)){//判断有没有图片 +1成不成功
+                    if($this->addCollectCodec($userid,$codeid,$customname)){
+                        return true;
+                    }else{
+                        $this->collectCodeMinus1($codeid);
+                    }
+                }
+            }
+            return false;
+        }
+        function deleteCollectCode($userid,$codeid){
+            if($this->isInCollectCodec($userid,$codeid)){
+                if($this->deleteCollectCodec($userid,$codeid)){
+                    $this->collectCodeMinus1($codeid);
+                    return true;
+                }
+            }
+            return false;
+        }
+        function showCollectCode($userid){
+            $codeids = $this->getCodecCodeidByUserid($userid);
+            $result=$this->getCodesByCodeids($codeids);
+            return $result;
+        }
     //=====================粉丝关注相关
         function subscribe($upid,$fansid){
             if(!$this->isFans($upid,$fansid)){
@@ -428,7 +612,12 @@
         }
         function getUpsByFansid($fansid){
             $upids=$this->getUpidsByFansid($fansid);
-            $result=$this->getUpsByUpids($upids);
+            $result=$this->getUsersByUserids($upids);
+            return $result;
+        }
+        function getFansByUpid($fansid){
+            $upids=$this->getFansidsByUpid($fansid);
+            $result=$this->getUsersByUserids($upids);
             return $result;
         }
     //======================XXXX相关

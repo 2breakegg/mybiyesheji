@@ -34,7 +34,6 @@
         $GLOBALS["Paths"]=$paths;
         return $requirePath;
     }
-
     require_once WWWGetRequirePath($ConfPath);
 ?>
 

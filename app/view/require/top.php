@@ -20,7 +20,28 @@
     }
     .top_2right{
         float:right;
-        line-height:30px;
+        width:100px;
+        padding: 4px;
+    }
+
+    .downList{
+        display: none;
+        margin: 0;
+        background: #ddd;
+        width:70px;
+    }
+    a:hover .downList{
+        display: block;
+    }
+    .downList input{
+        background:#ddd;
+        border: 0;
+        width:100%;
+        font-size: 15px;
+    }
+    .downList input:hover{
+        display: block;
+        background: #ccc;
     }
 </style>
 
@@ -30,14 +51,23 @@
             <a href="/">首页</a>
         </div>
         <div class="top_2right">
-        <?php 
-            if(isset($_COOKIE['userid']) && isset($_COOKIE['username'])){
-                // echo "'{$_COOKIE['userid']}'";
-                echo "<a href='/user/info?userid={$_COOKIE['userid']}'>{$_COOKIE['username']}</a>";
-            }else{
-                echo '<a href="/user/login">登录</a>';
-            }
-        ?>
+            <?php 
+                if(isset($_COOKIE['userid']) && isset($_COOKIE['username'])){
+                    require_once $ConfPath["mymodel"];
+                    ?>
+                    <a href='/user/info?userid=<?php echo $_COOKIE['userid'] ?>'><?php echo MyModel::getInstance()->getNicknameByUserid($_COOKIE['userid'])?>
+                        <div class="downList">
+                            <form action="/user/login" method="POST">
+                                <input type="hidden" name="type" value="signOut">
+                                <input type="submit" value="注销">
+                            </form>
+                        </div>
+                    </a>
+                    <?php
+                }else{
+                    echo '<a href="/user/login">登录</a>';
+                }
+            ?>
         </div>
         <div style="clear:both"></div>
     </div>

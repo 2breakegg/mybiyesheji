@@ -26,7 +26,6 @@
         }
 
         static function unsubscribe($upid,$fansid){
-            //todo
             loge2($upid." ".$fansid,"upid , fansid");
             if(MyModel::getInstance()->unsubscribe($upid,$fansid)){
                 echo "取消关注成功";

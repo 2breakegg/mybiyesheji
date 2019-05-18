@@ -5,7 +5,12 @@ body div a iframe{
     padding:0;
     margin:0;
 }
-
+.nickname{
+    text-align: center;
+    padding: 10px;
+    margin: 0;
+    background: rgb(170, 180, 231);
+}
 .tabBox{
     width:100px;
     float:left;

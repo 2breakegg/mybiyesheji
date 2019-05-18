@@ -31,7 +31,7 @@ function newCode(codeId,codeName,picPath,codeStrFromMysql,id){
                 t.codeBox.append(t.clearFloat);
                 t.codeBox.append(t.codeInfo);
                 t.a.append(t.codeBox);
-                document.getElementById("content").append(t.a);
+                document.getElementsByClassName("codeBigBox")[0].append(t.a);
 
 
                 t.pic.onload=function(){
@@ -249,6 +249,10 @@ function Init(){
             i);
         globalData[i].edit.el.Init();
     }
+    var clearFloatEL=document.createElement("div");
+    clearFloatEL.style="clear:both"
+    document.getElementsByClassName("codeBigBox")[0].append(clearFloatEL);
+
 }
 
 

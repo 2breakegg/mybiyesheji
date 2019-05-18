@@ -19,11 +19,16 @@
         "404"=>WWWROOT."/404.html",
         ""=>APPROOT."/index.php",
         "mymodel"=>APPROOT."/model/mymodel.php",
+
         "top"=>APPROOT."/view/require/top.php",
         "showpic"=>APPROOT."/view/require/showpic.php",
+        "showcode"=>APPROOT."/view/require/showcode.php",
+        "showuser"=>APPROOT."/view/require/showuser.php",
+
         "user"=>APPROOT."/user/route.php",
         "code"=>APPROOT."/code/route.php",
         "pic"=>APPROOT."/pic/route.php",
-        "file"=>APPROOT."/file/route.php"
+        "file"=>APPROOT."/file/route.php",
+        "search"=>APPROOT."/search/search.php",
     ];
 ?>

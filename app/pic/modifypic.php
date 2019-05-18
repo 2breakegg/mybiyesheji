@@ -72,5 +72,4 @@
             <input class="<?php echo $isCollectPic ? 'showInline' : 'hidden'?>" type="submit" name="type" value="取消收藏">
         </p>
     </form>
-    //todo 收藏数  收藏按钮  关注按钮  关注数量
 </div>

@@ -10,6 +10,7 @@
 </head>
 <body>
 <?php
+    require_once $ConfPath["mymodel"];
     require $ConfPath["top"];
     if(!isset($_GET['userid'])){
         if(!isset($_COOKIE['userid'])){
@@ -24,6 +25,7 @@
 ?>
     <div class="mainBox">
         <div class="tabBox">
+            <p class="nickname"><?php echo MyModel::getInstance()->getNicknameByUserid($_GET['userid']) ?></p>
             <a id="infoTab" href="javascript:getUrl('info')"><p>个人信息</p></a>
             <a id="picTab" href="javascript:getUrl('pic')"><p>图片</p></a>
             <a id="codeTab" href="javascript:getUrl('code')"><p>特效</p></a>

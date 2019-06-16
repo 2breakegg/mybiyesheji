@@ -1,4 +1,4 @@
-// picc 收藏图片展示页
+<!-- // picc 收藏图片展示页 -->
 <br/>
 <?php 
     require_once $ConfPath["mymodel"];

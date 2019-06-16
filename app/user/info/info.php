@@ -1,4 +1,4 @@
-// info 个人信息显示页
+<!-- // info 个人信息显示页 -->
 <?php
     require_once $ConfPath["mymodel"];;
 
@@ -30,13 +30,20 @@
 ?>
 <style>
     .infoTable{
-        border:1px black solid;
+        /* border:1px black solid; */
+        margin:20px auto;
     }
     .infoTable tr td:nth-child(1){
+        padding-right:10px;
         text-align: right;
     }
+    .infoTable tr td:nth-child(2){
+        width:150px;
+        padding-left:10px;
+        text-align: left;
+    }
 </style>
-<div>
+<div style="text-align:center;">
     <table id="infoTable" class="infoTable">
         <tr><td>ID</td>         <td><?php echo $row['userid'] ?></td></tr>
         <tr><td>用户名</td>     <td><?php echo $row['username'] ?></td></tr>

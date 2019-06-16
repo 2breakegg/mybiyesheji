@@ -1,4 +1,4 @@
-// uploadcode.php
+<!-- // uploadcode.php -->
 
 <?php
 
@@ -52,7 +52,7 @@ class UploadCode{
         }
     }
 }
-// header('Content-type: text/plain');
+ // header('Content-type: text/plain');
 
 (new UploadCode())->Init();
 ?>

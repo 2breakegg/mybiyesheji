@@ -1,4 +1,4 @@
-//search
+<!-- //search -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,12 +13,7 @@
             background:#ccc;
             padding:5px;
         }
-        #searchBar{
-            right: 10px;
-            position: absolute;
-            /* float: right; */
-            top: 10px;
-        }
+
         .picBigBox, .codeBigBox, .userBigBox{
             min-height:100px;
         }
@@ -26,6 +21,7 @@
             /* float: right; */
             position: relative;
             text-align: center;
+            margin:10px;
         }
     </style>
 </head>

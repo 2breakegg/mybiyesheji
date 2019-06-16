@@ -87,9 +87,9 @@
         //     header("Location: /index.php"); 
         // }
         @$GLOBALS['type']=$_POST["type"];
-        echo $type=$GLOBALS['type'];
+        $type=$GLOBALS['type'];
         if($type==""){
-            echo "showSignIn()";
+            // echo "showSignIn()";
         }elseif($type=="signIn"){
             signIn();
         }elseif($type=="signUp"){
@@ -130,13 +130,19 @@
             color:#fff;
             background:rgb(62, 88, 231);
         }
+        .message{
+            background:red;
+            text-align:center;
+            color:white;
+        }
     </style>
 </head>
 <body>
-    <div style="border:1 black soild">
+    <!-- <div style="border:1 black soild">
         php 输出: <br/>
-        <?php init();?>
-    </div>
+    </div> -->
+    <?php require_once $ConfPath["top"]; ?>
+    <div class="message"><?php init();?></div>
 
     <div>
 

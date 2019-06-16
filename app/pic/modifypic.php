@@ -15,7 +15,8 @@
     }
     .rightBox{
         float:left;
-        width:319px;
+        width:299px;
+        padding:10px;
     }
 </style>
 <?php
@@ -51,6 +52,10 @@
             <input type="submit" name="type" value="删除图片"/>
         </form>
     <!-- 上传者 end -->
+
+    <!-- 留言 -->
+        <?php require_once APPROOT."/pic/picreply.php";;?>
+    <!-- 留言 -->
 </div>
 
 <div class="rightBox">

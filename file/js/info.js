@@ -38,4 +38,4 @@ function init(){
     tagSelected(page);
 }
 init();
-// getUrl(info);
+ // getUrl(info);

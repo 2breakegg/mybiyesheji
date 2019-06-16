@@ -22,10 +22,18 @@
         loge2("未指定userid, 跳到自己的页面");
     };
     $ConfPath["top"];
+
+    @$userid=$_GET["userid"];
+    @$userid_cookie=$_COOKIE["userid"];
+    $conditions=["userid"=>$userid];
+    $row=MyModel::getInstance()->get1Result("user",$conditions);
 ?>
+    
     <div class="mainBox">
+        <div class="title">
+            <span class="nickname"><?php echo MyModel::getInstance()->getNicknameByUserid($_GET['userid']) ?>的主页</span>
+        </div>
         <div class="tabBox">
-            <p class="nickname"><?php echo MyModel::getInstance()->getNicknameByUserid($_GET['userid']) ?></p>
             <a id="infoTab" href="javascript:getUrl('info')"><p>个人信息</p></a>
             <a id="picTab" href="javascript:getUrl('pic')"><p>图片</p></a>
             <a id="codeTab" href="javascript:getUrl('code')"><p>特效</p></a>
@@ -36,6 +44,9 @@
         </div>
         <div id="content" class="content">
             <?php
+               @$userid=$_GET["userid"];
+               @$userid_cookie=$_COOKIE["userid"];
+               $isSelf=$userid==$userid_cookie;
                 if(isset($_GET['page'])){
                     require APPROOT."/user/info/{$_GET['page']}.php";
                     // echo "this is {$_GET['page']} page";

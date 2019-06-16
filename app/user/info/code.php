@@ -1,6 +1,5 @@
-//code page
-//特效页
-<a href="/code">添加新特效</a>
+<!-- //code page -->
+<!-- //特效页 -->
 <style>
     .codeBox{
         /* display: inline; */
@@ -27,9 +26,15 @@
     .codeInfo{
         text-align: center;
     }
+    .codeBigBox{
+        width:420px;
+        margin:auto;
+    }
 </style>
-<div class="codeBigBox">
-</div>
+<?php if($isSelf){?><a href="/code">添加新特效</a><?php }?>
+
+<div class="codeBigBox"></div>
+
 <?php
     require_once $ConfPath["mymodel"];
 

@@ -1,5 +1,4 @@
-// codec page
-特效收藏页
+<!-- // codec page -->
 <style>
     .codeBox{
         /* display: inline; */
@@ -26,6 +25,10 @@
     .codeInfo{
         text-align: center;
     }
+    .codeBigBox{
+        width:420px;
+        margin:auto;
+    }
 </style>
 <div class="codeBigBox">
 </div>
@@ -43,7 +46,7 @@
         }
 
         static function ShowCodes(){
-            $codeDatas=MyModel::getInstance()->getCodeByUserid($_GET["userid"]);//todo 自己上传的code 改 收藏的code
+            $codeDatas=MyModel::getInstance()->showCollectCode($_GET["userid"]);//todo 自己上传的code 改 收藏的code
             echo "<script> var mysqlData=[";
             for($i=0;$i<count($codeDatas);$i++){
                 echo '{"codename":"'.$codeDatas[$i]["codename"].'",';

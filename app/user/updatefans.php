@@ -1,4 +1,4 @@
-//updatefans.php
+<!-- //updatefans.php -->
 <?php
     require_once $ConfPath["top"];
     require_once $ConfPath["mymodel"];

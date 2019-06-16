@@ -14,7 +14,9 @@ body{
 .showInline{
     display:inline;
 }
-
+img{
+    max-width: 600px;
+}
 
 .mainBox{
     width:960px;

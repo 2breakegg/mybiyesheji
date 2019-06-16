@@ -1,5 +1,5 @@
-// pic 图片展示页<br/>
-<a href="/pic/">添加新图片</a>
+<!-- // pic 图片展示页<br/> -->
+<?php if($isSelf){?><a href="/pic/">添加新图片</a><?php }?>
 <br/>
 <?php 
     require_once $ConfPath["mymodel"];

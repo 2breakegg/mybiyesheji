@@ -5,10 +5,11 @@
     }
     .top{
         min-width: 960px;
-        height:30px;
+        height:50px;
         margin:0;
         padding:0 30px;
         background:#ccf;
+        font-size:30px;
     }
     .top_2{
         width:960px;
@@ -16,12 +17,12 @@
     }
     .top_2left{
         float:left;
-        line-height:30px;
+        /* line-height:50px; */
     }
     .top_2right{
         float:right;
         width:100px;
-        padding: 4px;
+        /* padding: 4px; */
     }
 
     .downList{
@@ -29,6 +30,8 @@
         margin: 0;
         background: #ddd;
         width:70px;
+        padding:0;
+        font-size:20px;
     }
     a:hover .downList{
         display: block;
@@ -37,10 +40,9 @@
         background:#ddd;
         border: 0;
         width:100%;
-        font-size: 15px;
+        font-size: 20px;
     }
     .downList input:hover{
-        display: block;
         background: #ccc;
     }
 </style>

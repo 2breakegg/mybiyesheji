@@ -1,4 +1,4 @@
-//uploadpic.php
+<!-- //uploadpic.php -->
 <?php
     require_once $ConfPath["top"];
     require_once $ConfPath["mymodel"];

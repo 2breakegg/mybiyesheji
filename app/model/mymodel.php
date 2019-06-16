@@ -97,7 +97,14 @@
             $result = mysqli_query(self::$conn,$mysql_qry);
             logvarM($result);
         }
-
+        function getRowsByMysql_str($mysql_str){
+            $data=mysqli_query(self::$conn,$mysql_str);
+            $result=Array();
+            while($row = mysqli_fetch_assoc($data)){
+                $result[count($result)]=$row;
+            }
+            return $result;
+        }
 // ============================user表
         function getNicknameByUserid($userid){
             $mysql_str="SELECT nickname FROM user WHERE userid = '{$userid}'";
@@ -520,7 +527,34 @@
             }
             return $fansids;
         }
-
+//==========================picreply
+        function getPicreplyByPicid($picid){
+            $mysql_str="SELECT * FROM picreply WHERE picid={$picid}";
+            $result=$this->getRowsByMysql_str($mysql_str);
+            return $result;
+        }
+        function addPicreply($userid,$picid,$content){
+            $time=time();
+            $mysql_str0="SELECT IFNULL((SELECT MAX(floor) FROM picreply WHERE picid=$picid) , 0)+1 as floor";
+            $floor=mysqli_fetch_assoc(mysqli_query(self::$conn , $mysql_str0))["floor"];
+            $mysql_str="INSERT INTO picreply VALUE ($userid,$picid, $floor , '$content',$time)";
+            return mysqli_query(self::$conn,$mysql_str);
+        }
+//==========================codereply
+        function getCodereplyByCodeid($codeid){
+            $mysql_str="SELECT * FROM codereply WHERE codeid={$codeid}";
+            $result=$this->getRowsByMysql_str($mysql_str);
+            return $result;
+        }
+        function addCodereply($userid,$codeid,$content){
+            $time=time();
+            $mysql_str0="SELECT IFNULL((SELECT MAX(floor) FROM codereply WHERE codeid=$codeid) , 0)+1 as floor";
+            $floor=mysqli_fetch_assoc(mysqli_query(self::$conn , $mysql_str0))["floor"];
+            // var_dump($floor);
+            $mysql_str="INSERT INTO codereply VALUE ($userid,$codeid, $floor , '$content',$time)";
+            // var_dump($mysql_str);
+            return mysqli_query(self::$conn,$mysql_str);
+        }
 //==========================杂
     //======================图片收藏相关
         function collectPic($userid,$picid,$customname){

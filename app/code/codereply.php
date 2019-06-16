@@ -1,20 +1,19 @@
 <?php
     require_once $ConfPath["mymodel"];
-    class Picreply{
+    class Codereply{
         static function init(){
 
         }
-        static function showPicreply($picid){
-            $PicreplyDatas=MyModel::getInstance()->getPicreplyByPicid($picid);
-            for($i=0;$i<count($PicreplyDatas);$i++){
-                self::darwPicreply($PicreplyDatas[$i]);
+        static function showCodereply($codeid){
+            $CodereplyDatas=MyModel::getInstance()->getCodereplyByCodeid($codeid);
+            for($i=0;$i<count($CodereplyDatas);$i++){
+                self::darwCodereply($CodereplyDatas[$i]);
             }
-            // var_dump($PicreplyDatas);
         }
-        static function darwPicreply($PicreplyData){
-            $nickname=MyModel::getInstance()->getNicknameByUserid($PicreplyData["userid"]);
-            $content=$PicreplyData["content"];
-            $time=date('Y-n-d   h:i A',intval($PicreplyData["time"]));
+        static function darwCodereply($CodereplyData){
+            $nickname=MyModel::getInstance()->getNicknameByUserid($CodereplyData["userid"]);
+            $content=$CodereplyData["content"];
+            $time=date('Y-n-d   h:i A',intval($CodereplyData["time"]));
             echo'<div class="replyUnity">';
             echo    '<div class="replyUser">';
             echo        "<a href='{$nickname}'>{$nickname}</a><br>";
@@ -54,15 +53,15 @@
 </style>
 <div>
     <div class="headline2"> 留言</div>
-    <form action="./addpicreply.php" method="post">
+    <form action="./addcodereply.php" method="post">
         <!-- <input type="text" value="javascript:location.href"> -->
-        <input type="hidden" name="picid" value="<?php echo $picid; ?>">
+        <input type="hidden" name="codeid" value="<?php echo $codeid; ?>">
         <textarea name="content" id="" cols="80" rows="4"></textarea>
         <input type="submit" value="提交">
     </form>
 
     <?php
-        Picreply::showPicreply($picid);
+        Codereply::showCodereply($codeid);
     ?>
 
 </div>

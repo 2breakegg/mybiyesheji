@@ -54,7 +54,7 @@
     <!-- 上传者 end -->
 
     <!-- 留言 -->
-        <?php require_once APPROOT."/pic/picreply.php";;?>
+        <?php require_once APPROOT."/pic/picreply.php";?>
     <!-- 留言 -->
 </div>
 

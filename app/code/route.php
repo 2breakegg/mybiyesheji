@@ -9,6 +9,8 @@
             "uploadcode.php"=>$thisRoot."/uploadcode.php",
             "collectcode"=>$thisRoot."/collectcode.php",
             "collectcode.php"=>$thisRoot."/collectcode.php",
+            "addcodereply"=>$thisRoot."/addcodereply.php",
+            "addcodereply.php"=>$thisRoot."/addcodereply.php",
         );
 
         @$requirePath = $codeRoute[$Paths[$Paths["now"]]] 

@@ -9,6 +9,7 @@
             "uploadpic.php"=>$thisRoot."/uploadpic.php",
             "collectpic"=>$thisRoot."/collectpic.php",
             "collectpic.php"=>$thisRoot."/collectpic.php",
+            "addpicreply.php"=>$thisRoot."/addpicreply.php",
         );
 
         @$requirePath = $codeRoute[$Paths[$Paths["now"]]] 
